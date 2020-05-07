@@ -68,7 +68,7 @@ app.post("/addUser", (req, res) => {
       (err) => {
         if (err) throw err;
         else {
-          res.redirect("/");
+          res.redirect("200", "/");
         }
       }
     );
@@ -89,7 +89,7 @@ app.post("/addUser", (req, res) => {
     };
     client.query(updateQuery, (err) => {
       if (err) throw err;
-      res.redirect("/");
+      res.redirect("200", "/");
     });
   } else if ("Search" in req.body) {
     console.log("Searching");
@@ -103,7 +103,7 @@ app.post("/addUser", (req, res) => {
     client.query(searchQuery, (err, response) => {
       if (err) throw err;
       console.log("RESPONSE.ROWS", response.rows[0]);
-      res.redirect("/results", { userData: response.rows[0] });
+      res.render("/results", { userData: response.rows[0] });
     });
   }
 });
