@@ -65,10 +65,18 @@ app.post("/addUser", (req, res) => {
         newUser.birthDate,
         newUser.password,
       ],
-      (err, response) => {
+      (err) => {
         if (err) throw err;
         else {
-          res.render("results", { userData: response.rows[0] });
+          res.render("results", {
+            userData: {
+              first_name: newUser.firstName,
+              last_name: newUser.lastName,
+              email: newUser.email,
+              birth_date: newUser.birthDate,
+              password: newUser.password,
+            },
+          });
         }
       }
     );
@@ -87,9 +95,17 @@ app.post("/addUser", (req, res) => {
         req.body.Password,
       ],
     };
-    client.query(updateQuery, (err, response) => {
+    client.query(updateQuery, (err) => {
       if (err) throw err;
-      res.render("results", { userData: response.rows[0] });
+      res.render("results", {
+        userData: {
+          first_name: newUser.firstName,
+          last_name: newUser.lastName,
+          email: newUser.email,
+          birth_date: newUser.birthDate,
+          password: newUser.password,
+        },
+      });
     });
   } else if ("Search" in req.body) {
     console.log("Searching");
