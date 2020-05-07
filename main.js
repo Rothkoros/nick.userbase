@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const { v4: uuid } = require("uuid");
 const User = require("./user.js");
 
 const { Client } = require("pg");
@@ -8,10 +9,7 @@ const client = new Client({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false },
 });
-client.connect().then(
-  (response) => console.log("response", response),
-  (err) => console.log("Client Connect Error", err)
-);
+client.connect();
 
 const createTableString = `
 CREATE TABLE IF NOT EXISTS users (
@@ -43,6 +41,35 @@ app.use(express.static(viewsFolder));
 // URLs
 app.get("/", (req, res) => {
   res.render("newuser", {});
+});
+
+app.post("/addUser", (req, res) => {
+  console.log(req);
+  const newUser = new User(
+    uuid(),
+    req.body.FirstName,
+    req.body.LastName,
+    req.body.Email,
+    req.body.Birthday,
+    req.body.Password
+  );
+  client.query(
+    "INSERT INTO users(id, first_name, last_name, email, birthday, password) VALUES($1, $2, $3, $4, $5, $6)",
+    [
+      newUser.id,
+      newUser.firstName,
+      newUser.lastName,
+      newUser.email,
+      newUser.birthDate,
+      newUser.password,
+    ],
+    (err) => {
+      if (err) throw err;
+      else {
+        res.redirect("/");
+      }
+    }
+  );
 });
 
 app.listen(app.get("port"), () =>
