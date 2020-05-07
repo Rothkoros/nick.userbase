@@ -54,7 +54,7 @@ app.post("/addUser", (req, res) => {
     req.body.Password
   );
   client.query(
-    "INSERT INTO users(id, first_name, last_name, email, birthday, password) VALUES($1, $2, $3, $4, $5, $6)",
+    "INSERT INTO users(id, first_name, last_name, email, birth_date, password) VALUES($1, $2, $3, $4, $5, $6)",
     [
       newUser.id,
       newUser.firstName,
