@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS users (
   first_name varchar(50),
   last_name varchar(50),
   email varchar(50),
-  birth_date varchar(8),
+  birth_date varchar(10),
   password varchar(15)
 );
 `;
@@ -44,7 +44,9 @@ app.get("/", (req, res) => {
 });
 
 app.post("/addUser", (req, res) => {
+  console.log(req.body);
   if ("Create" in req.body) {
+    console.log("Creating");
     const newUser = new User(
       uuid(),
       req.body.FirstName,
@@ -71,6 +73,7 @@ app.post("/addUser", (req, res) => {
       }
     );
   } else if ("Update" in req.body) {
+    console.log("Updating");
     const updateQuery = {
       text: `UPDATE users
               SET first_name = $1, last_name = $2, email = $3, birth_date = $4
@@ -89,6 +92,7 @@ app.post("/addUser", (req, res) => {
       res.redirect("/");
     });
   } else if ("Search" in req.body) {
+    console.log("Searching");
     const searchQuery = {
       text: `SELECT * FROM users
                 WHERE
