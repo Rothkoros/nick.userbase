@@ -1,14 +1,17 @@
 const express = require("express");
 const path = require("path");
-const uuid = require("uuid/dist/v4");
 const User = require("./user.js");
 
 const { Client } = require("pg");
 
 const client = new Client({
   connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
 });
-client.connect();
+client.connect().then(
+  (response) => console.log("response", response),
+  (err) => console.log("Client Connect Error", err)
+);
 
 const createTableString = `
 CREATE TABLE IF NOT EXISTS users (
