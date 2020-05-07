@@ -65,10 +65,10 @@ app.post("/addUser", (req, res) => {
         newUser.birthDate,
         newUser.password,
       ],
-      (err) => {
+      (err, response) => {
         if (err) throw err;
         else {
-          res.redirect(200, "/");
+          res.render("results", { userData: response.rows[0] });
         }
       }
     );
@@ -87,9 +87,9 @@ app.post("/addUser", (req, res) => {
         req.body.Password,
       ],
     };
-    client.query(updateQuery, (err) => {
+    client.query(updateQuery, (err, response) => {
       if (err) throw err;
-      res.redirect(200, "/");
+      res.render("results", { userData: response.rows[0] });
     });
   } else if ("Search" in req.body) {
     console.log("Searching");
