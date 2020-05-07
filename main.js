@@ -10,10 +10,6 @@ const client = new Client({
 });
 client.connect();
 
-const resetTableString = `
-    DROP TABLE users;
-`;
-
 const createTableString = `
 CREATE TABLE IF NOT EXISTS users (
   id varchar(50),
@@ -24,10 +20,6 @@ CREATE TABLE IF NOT EXISTS users (
   password varchar(15)
 );
 `;
-
-// client.query(resetTableString).then((result) => {
-//   console.log(result);
-// });
 
 client.query(createTableString, (err) => {
   if (err) throw err;
@@ -46,5 +38,5 @@ app.use(express.static(viewsFolder));
 
 // URLs
 app.get("/", (req, res) => {
-  res.render("newuser", {});
+  res.render("newuser.html", {});
 });
