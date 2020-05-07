@@ -9,11 +9,14 @@ html
             .top
                 .containerTitle Search Result
             .middle
-              p.inputLabel= userData.first_name
-              p.inputLabel= userData.last_name
-              p.inputLabel= userData.email
-              p.inputLabel= userData.birth_date
-              p.inputLabel= userData.password
+              .container
+                p.inputLabel= userData.first_name
+                p.inputLabel= userData.last_name
+                p.inputLabel= userData.email
+                p.inputLabel= userData.birth_date
+                p.inputLabel= userData.password
+
+                a(href="/") Go Home
 
             .bottom
-              button.inputSubmit(type='button' class="editButton" onclick=`goHome()`) Return Home
+              

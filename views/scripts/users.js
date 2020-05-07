@@ -1,3 +1,3 @@
 function goHome() {
-  window.location.href = `/`;
+  window.location.href = ``;
 }
