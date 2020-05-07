@@ -10,6 +10,10 @@ const client = new Client({
 });
 client.connect();
 
+const resetTableString = `
+    DROP TABLE users;
+`;
+
 const createTableString = `
 CREATE TABLE IF NOT EXISTS users (
   id varchar(50),
@@ -21,9 +25,10 @@ CREATE TABLE IF NOT EXISTS users (
 );
 `;
 
-// client.query(createTableString, (err) => {
-//   if (err) throw err;
-// });
+client.query(resetTableString).then((result) => {
+  console.log(result);
+});
+
 client
   .query(createTableString)
   .then((result) => {
