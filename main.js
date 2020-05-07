@@ -5,9 +5,7 @@ const User = require("./user.js");
 
 const { Client } = require("pg");
 
-const client = new Client({
-  connectionString: `postgres://biiwanfouocuwl:a603774577c80548dcfad3838b40246b1384b6c42813b8ce0360c1591bfb384f@ec2-54-165-36-134.compute-1.amazonaws.com:5432/d7c225schdj2m5`,
-});
+const client = new Client({ connectionString: process.env.DATABASE_URL });
 client.connect();
 
 const resetTableString = `
@@ -25,9 +23,9 @@ CREATE TABLE IF NOT EXISTS users (
 );
 `;
 
-client.query(resetTableString).then((result) => {
-  console.log(result);
-});
+// client.query(resetTableString).then((result) => {
+//   console.log(result);
+// });
 
 client
   .query(createTableString)
@@ -45,7 +43,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const viewsFolder = path.join(__dirname, "views");
 
-app.set("port", process.env.PORT || 3000);
+app.set("port", process.env.PORT);
 app.set("views", viewsFolder);
 app.use(express.static(viewsFolder));
 
