@@ -44,32 +44,64 @@ app.get("/", (req, res) => {
 });
 
 app.post("/addUser", (req, res) => {
-  console.log(req);
-  const newUser = new User(
-    uuid(),
-    req.body.FirstName,
-    req.body.LastName,
-    req.body.Email,
-    req.body.Birthday,
-    req.body.Password
-  );
-  client.query(
-    "INSERT INTO users(id, first_name, last_name, email, birth_date, password) VALUES($1, $2, $3, $4, $5, $6)",
-    [
-      newUser.id,
-      newUser.firstName,
-      newUser.lastName,
-      newUser.email,
-      newUser.birthDate,
-      newUser.password,
-    ],
-    (err) => {
-      if (err) throw err;
-      else {
-        res.redirect("/");
+  if ("Create" in req.body) {
+    const newUser = new User(
+      uuid(),
+      req.body.FirstName,
+      req.body.LastName,
+      req.body.Email,
+      req.body.Birthday,
+      req.body.Password
+    );
+    client.query(
+      "INSERT INTO users(id, first_name, last_name, email, birth_date, password) VALUES($1, $2, $3, $4, $5, $6)",
+      [
+        newUser.id,
+        newUser.firstName,
+        newUser.lastName,
+        newUser.email,
+        newUser.birthDate,
+        newUser.password,
+      ],
+      (err) => {
+        if (err) throw err;
+        else {
+          res.redirect("/");
+        }
       }
-    }
-  );
+    );
+  } else if ("Update" in req.body) {
+    const updateQuery = {
+      text: `UPDATE users
+              SET first_name = $1, last_name = $2, email = $3, birth_date = $4
+              WHERE
+                  password = $5;`,
+      values: [
+        req.body.FirstName,
+        req.body.LastName,
+        req.body.Email,
+        req.body.Birthday,
+        req.body.Password,
+      ],
+    };
+    client.query(updateQuery, (err) => {
+      if (err) throw err;
+      res.redirect("/");
+    });
+  } else if ("Search" in req.body) {
+    const searchQuery = {
+      text: `SELECT * FROM users
+                WHERE
+                  first_name = $1
+      `,
+      values: [req.body.FirstName],
+    };
+    client.query(searchQuery, (err, response) => {
+      if (err) throw err;
+      console.log("RESPONSE.ROWS", response.rows[0]);
+      res.redirect("/results", { userData: response.rows[0] });
+    });
+  }
 });
 
 app.listen(app.get("port"), () =>
