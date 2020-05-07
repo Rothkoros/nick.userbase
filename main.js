@@ -118,7 +118,6 @@ app.post("/addUser", (req, res) => {
     };
     client.query(searchQuery, (err, response) => {
       if (err) throw err;
-      console.log("RESPONSE.ROWS", response.rows[0]);
       res.render("results", { userData: response.rows[0] });
     });
   }
