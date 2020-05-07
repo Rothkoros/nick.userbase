@@ -5,7 +5,10 @@ const User = require("./user.js");
 
 const { Client } = require("pg");
 
-const client = new Client({ connectionString: process.env.DATABASE_URL });
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true,
+});
 client.connect();
 
 const resetTableString = `
@@ -27,14 +30,9 @@ CREATE TABLE IF NOT EXISTS users (
 //   console.log(result);
 // });
 
-client
-  .query(createTableString)
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+client.query(createTableString, (err) => {
+  if (err) throw err;
+});
 
 const app = express();
 
