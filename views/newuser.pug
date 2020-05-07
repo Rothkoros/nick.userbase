@@ -1,0 +1,31 @@
+html
+    head
+        link(rel='stylesheet' href='/css/users.css' type="text/css")
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Merriweather|Poppins&display=swap')
+        title Nick's User Manager
+    body
+        .mainContainer
+            .containerTitle Make A User
+            .top
+                .buttonContainer
+                    p.buttonLabel
+                    button(type='button' class="sortButton" onclick=`sortName('Ascending')`) Sort Ascending
+                    button(type='button' class="sortButton" onclick=`sortName('Descending')`) Sort Descending
+                    button(type='button' class='sortButton' onclick=`newUser()`) New User
+                    button(type='button' class='sortButton' onclick=`goToUsers()`) Show All Users
+                form.searchContainer
+                    p.buttonLabel Search by Name
+                    input.userInput(type='text' id='Name' name='Name' placeholder='Name')
+                    button(type='button' class="sortButton" onclick=`searchName()`) Search
+            .middle
+                ul(class="userList")
+                    each user in userData
+                        -var userId= user.UserId
+                        div(class="userContainer" id=`${userId}`)
+                            each value, key in user
+                                li(class="userValue")= key + ': ' + value
+                            button(type='button' class="editButton" onclick=`editView('${userId}')`) Edit
+                            button(type='button' class="editButton" onclick=`deleteView('${userId}')`) Delete
+            .bottom
+
+    script(src='/scripts/users.js')

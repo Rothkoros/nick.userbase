@@ -36,12 +36,13 @@ app.use(express.urlencoded({ extended: true }));
 const viewsFolder = path.join(__dirname, "views");
 
 app.set("port", process.env.PORT);
+app.set("view engine", "pug");
 app.set("views", viewsFolder);
 app.use(express.static(viewsFolder));
 
 // URLs
 app.get("/", (req, res) => {
-  res.render("newuser.html", {});
+  res.render("newuser", {});
 });
 
 app.listen(app.get("port"), () =>
