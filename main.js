@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const uuid = require("uuid/v4");
+const uuid = require("uuid/dist/v4");
 const User = require("./user.js");
 
 const { Client } = require("pg");
