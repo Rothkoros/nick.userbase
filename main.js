@@ -43,3 +43,7 @@ app.use(express.static(viewsFolder));
 app.get("/", (req, res) => {
   res.render("newuser.html", {});
 });
+
+app.listen(app.get("port"), () =>
+  console.log(`App listening on port ${app.get("port")}!`)
+);
