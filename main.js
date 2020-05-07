@@ -22,8 +22,11 @@ CREATE TABLE IF NOT EXISTS users (
 );
 `;
 
-client.query(createTableString, (err) => {
-  if (err) throw err;
+// client.query(createTableString, (err) => {
+//   if (err) throw err;
+// });
+client.query(createTableString).then((result) => {
+  console.log(result);
 });
 
 const app = express();
