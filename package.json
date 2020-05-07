@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/Rothkoros/nick.userbase/issues"
   },
-  "homepage": "https://github.com/Rothkoros/nick.userbase#readme"
+  "homepage": "https://github.com/Rothkoros/nick.userbase#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^8.0.3",
+    "uuid": "^8.0.0"
+  }
 }
