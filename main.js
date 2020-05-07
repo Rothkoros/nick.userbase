@@ -68,7 +68,7 @@ app.post("/addUser", (req, res) => {
       (err) => {
         if (err) throw err;
         else {
-          res.redirect("200", "/");
+          res.redirect(200, "/");
         }
       }
     );
@@ -89,7 +89,7 @@ app.post("/addUser", (req, res) => {
     };
     client.query(updateQuery, (err) => {
       if (err) throw err;
-      res.redirect("200", "/");
+      res.redirect(200, "/");
     });
   } else if ("Search" in req.body) {
     console.log("Searching");
